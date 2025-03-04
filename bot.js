@@ -30,7 +30,7 @@ bot.command('manager', async (ctx) => {
     }, 30000);
 });
 //*/1 * * * *'
-/*cron.schedule('/1 * * * *', () => { // 9 часов UTC = 12 часов по Москве
+/*cron.schedule('/1 * * * *', () => { // каждую минуту
     console.log(`Скрипт запущен в 12:00 по Москве`);
 }, {
     scheduled: true,
