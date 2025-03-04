@@ -10,7 +10,6 @@ const leads = new Datastore({filename: 'leads'});
 leads.loadDatabase();
 bot.start(async (ctx) => {
     commandStart(ctx);
-    console.log(ctx.chat.id);
     await leads.find({userId: ctx.from.id}, function (err, docs) {
         if (!docs.length) {
             leads.insert({userId : ctx.from.id, firstName: ctx.from?.first_name, lastName: ctx.from?.last_name, username: ctx.from?.username, stage: 1, final: false, lead: '', chatId: ctx.chat.id});
@@ -106,8 +105,10 @@ bot.on('contact', async (ctx) => {
         maxRedirects: 1,
     }).then((response) => {
         leads.update({userId: ctx.from.id}, { $set: {final: true, lead: response.data?.result} }, {upsert: false});
+        ctx.reply('Спасибо за запись на экскурсия! В скором времени с вами свяжется наш специалист!😎');
         return true;
     }).catch((error) => {
+        ctx.reply('Произошла ошибка создания заявки. Обратитесь к менеджеру через команду /manager.');
         return false;
     });
 
